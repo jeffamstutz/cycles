@@ -360,6 +360,10 @@ if(WITH_CYCLES_BLENDER)
   add_definitions(-DWITH_BLENDER_GUARDEDALLOC)
 endif()
 
+if(WITH_CYCLES_NETWORK)
+  add_definitions(-DWITH_NETWORK)
+endif()
+
 add_subdirectory(bvh)
 add_subdirectory(device)
 add_subdirectory(graph)
@@ -395,10 +399,6 @@ add_subdirectory(doc)
 
 if(WITH_CYCLES_BLENDER)
   add_subdirectory(blender)
-endif()
-
-if(WITH_CYCLES_NETWORK)
-  add_definitions(-DWITH_NETWORK)
 endif()
 
 if(WITH_CYCLES_STANDALONE OR WITH_CYCLES_NETWORK OR WITH_CYCLES_CUBIN_COMPILER)
