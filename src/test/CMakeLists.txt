@@ -36,13 +36,7 @@ set(INC
 )
 
 set(ALL_CYCLES_LIBRARIES
-  cycles_device
-  cycles_kernel
-  cycles_render
-  cycles_bvh
-  cycles_graph
-  cycles_subd
-  cycles_util
+  cycles_libs
   extern_clew
   ${CYCLES_GL_LIBRARIES}
   ${CYCLES_GLEW_LIBRARIES}

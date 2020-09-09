@@ -21,7 +21,8 @@ function(cycles_set_solution_folder target)
 endfunction()
 
 function(cycles_add_library target library_deps)
-  add_library(${target} ${ARGN})
+  add_library(${target} OBJECT ${ARGN})
+  return()
 
   # On Windows certain libraries have two sets of binaries: one for debug builds and one for
   # release builds. The root of this requirement goes into ABI, I believe, but that's outside

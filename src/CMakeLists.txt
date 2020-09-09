@@ -354,23 +354,46 @@ if(WITH_CYCLES_CUDA_BINARIES AND WITH_CYCLES_CUBIN_COMPILER AND NOT WITH_CYCLES_
   endif()
 endif()
 
-# Setup Cycles interface target (for Blender + standalone)
-
-add_library(cycles_libs INTERFACE)
-target_link_libraries(cycles_libs INTERFACE
-  cycles_bvh
-  cycles_device
-  cycles_graph
-  cycles_kernel
-  cycles_render
-  cycles_subd
-  cycles_util
-)
-
-# Subdirectories
+# Setup Cycles subdirs for core cycles target
 
 if(WITH_CYCLES_BLENDER)
   add_definitions(-DWITH_BLENDER_GUARDEDALLOC)
+endif()
+
+add_subdirectory(bvh)
+add_subdirectory(device)
+add_subdirectory(graph)
+add_subdirectory(kernel)
+add_subdirectory(render)
+add_subdirectory(subd)
+add_subdirectory(util)
+
+add_library(cycles_libs
+  $<TARGET_OBJECTS:cycles_bvh>
+  $<TARGET_OBJECTS:cycles_device>
+  $<TARGET_OBJECTS:cycles_graph>
+  $<TARGET_OBJECTS:cycles_kernel>
+  $<TARGET_OBJECTS:cycles_render>
+  $<TARGET_OBJECTS:cycles_subd>
+  $<TARGET_OBJECTS:cycles_util>
+)
+target_link_libraries(cycles_libs INTERFACE
+  ${CYCLES_GL_LIBRARIES}
+  ${TBB_LIBRARIES}
+  $<$<BOOL:${WITH_CUDA_DYNLOAD}>:extern_cuew>
+  $<$<NOT:$<BOOL:${WITH_CUDA_DYNLOAD}>>:${CUDA_CUDA_LIBRARY}>
+  $<$<BOOL:${WITH_CYCLES_DEVICE_OPENCL}>:extern_clew>
+  $<$<BOOL:${WITH_OPENIMAGEDENOISE}>:${OPENIMAGEDENOISE_LIBRARIES}>
+  $<$<BOOL:${WITH_CYCLES_OSL}>:cycles_kernel_osl>
+  $<$<BOOL:${CYCLES_STANDALONE_REPOSITORY}>:extern_sky>
+  $<$<NOT:$<BOOL:${CYCLES_STANDALONE_REPOSITORY}>>:bf_intern_sky>
+)
+
+# Extra Subdirectories
+
+add_subdirectory(doc)
+
+if(WITH_CYCLES_BLENDER)
   add_subdirectory(blender)
 endif()
 
@@ -381,15 +404,6 @@ endif()
 if(WITH_CYCLES_STANDALONE OR WITH_CYCLES_NETWORK OR WITH_CYCLES_CUBIN_COMPILER)
   add_subdirectory(app)
 endif()
-
-add_subdirectory(bvh)
-add_subdirectory(device)
-add_subdirectory(doc)
-add_subdirectory(graph)
-add_subdirectory(kernel)
-add_subdirectory(render)
-add_subdirectory(subd)
-add_subdirectory(util)
 
 # TODO(sergey): Make this to work with standalone repository.
 if(WITH_GTESTS)
