@@ -23,13 +23,7 @@ set(INC_SYS
 )
 
 set(LIBRARIES
-  cycles_device
-  cycles_kernel
-  cycles_render
-  cycles_bvh
-  cycles_subd
-  cycles_graph
-  cycles_util
+  cycles_libs
 )
 
 if(WITH_CYCLES_OSL)

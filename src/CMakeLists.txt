@@ -354,6 +354,19 @@ if(WITH_CYCLES_CUDA_BINARIES AND WITH_CYCLES_CUBIN_COMPILER AND NOT WITH_CYCLES_
   endif()
 endif()
 
+# Setup Cycles interface target (for Blender + standalone)
+
+add_library(cycles_libs INTERFACE)
+target_link_libraries(cycles_libs INTERFACE
+  cycles_bvh
+  cycles_device
+  cycles_graph
+  cycles_kernel
+  cycles_render
+  cycles_subd
+  cycles_util
+)
+
 # Subdirectories
 
 if(WITH_CYCLES_BLENDER)
