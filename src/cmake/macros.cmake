@@ -20,7 +20,7 @@ function(cycles_set_solution_folder target)
   endif()
 endfunction()
 
-macro(cycles_add_library target library_deps)
+function(cycles_add_library target library_deps)
   add_library(${target} ${ARGN})
 
   # On Windows certain libraries have two sets of binaries: one for debug builds and one for
@@ -82,7 +82,7 @@ macro(cycles_add_library target library_deps)
   endif()
 
   cycles_set_solution_folder(${target})
-endmacro()
+endfunction()
 
 # Cycles library dependencies common to all executables
 
