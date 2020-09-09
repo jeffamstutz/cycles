@@ -1,20 +1,4 @@
 ###########################################################################
-# Disable insource build
-
-if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
-	message(FATAL_ERROR
-		"CMake generation for Cycles is not allowed within the source directory!"
-		"\n Remove the CMakeCache.txt file and try again from another folder, e.g.:"
-		"\n "
-		"\n rm CMakeCache.txt"
-		"\n cd .."
-		"\n mkdir cmake-make"
-		"\n cd cmake-make"
-		"\n cmake ../cycles"
-	)
-endif()
-
-###########################################################################
 # Policies
 
 cmake_minimum_required(VERSION 3.10)
@@ -37,6 +21,8 @@ cmake_policy(SET CMP0043 NEW)
 # Use ROOT variables in find_package.
 cmake_policy(SET CMP0074 NEW)
 
+set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
+
 ###########################################################################
 # Initialize project.
 
@@ -58,7 +44,6 @@ include(macros)
 
 # Avoid having empty buildtype.
 set(CMAKE_BUILD_TYPE_INIT "Release")
-
 
 # Some stuff is different when building stabdalone Cycles from inside
 # Blender source code and when building it from it's own repository.
