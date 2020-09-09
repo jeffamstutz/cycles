@@ -1,14 +1,2 @@
-set(SRC
-	src/cuew.c
-)
-
-set(SRC_HEADERS
-	include/cuew.h
-)
-
-include_directories(
-	.
-	include
-)
-
-add_library(extern_cuew ${SRC} ${SRC_HEADERS})
+add_library(extern_cuew STATIC src/cuew.c)
+target_include_directories(extern_cuew PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)

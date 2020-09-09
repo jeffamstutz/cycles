@@ -16,15 +16,7 @@
 #
 # ***** END GPL LICENSE BLOCK *****
 
-set(INC
-	include
-)
-
-set(INC_SYS
-
-)
-
-set(SRC
+add_library(extern_numaapi STATIC
 	source/numaapi.c
 	source/numaapi_linux.c
 	source/numaapi_stub.c
@@ -33,11 +25,5 @@ set(SRC
 	include/numaapi.h
 	source/build_config.h
 )
-
-include_directories(
-	${INC} ${INC_SYS}
-)
-
-add_definitions(-DWITH_DYNLOAD)
-
-add_library(extern_numaapi "${SRC}" "${INC}" "${INC_SYS}")
+target_include_directories(extern_numaapi PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
+target_compile_definitions(extern_numaapi PRIVATE -DWITH_DYNLOAD)

@@ -1,15 +1,5 @@
-set(SRC
-	src/clew.c
+add_library(extern_clew ${SRC} src/clew.c)
+target_include_directories(extern_clew PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
+target_compile_definitions(extern_clew PRIVATE
+	-DCL_USE_DEPRECATED_OPENCL_1_1_APIS
 )
-
-set(SRC_HEADERS
-	include/clew.h
-)
-
-add_definitions(-DCL_USE_DEPRECATED_OPENCL_1_1_APIS)
-include_directories(
-	.
-	include
-)
-
-add_library(extern_clew ${SRC} ${SRC_HEADERS})

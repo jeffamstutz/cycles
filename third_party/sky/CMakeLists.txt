@@ -16,15 +16,7 @@
 #
 # ***** END GPL LICENSE BLOCK *****
 
-set(INC
-  include
-)
-
-set(INC_SYS
-
-)
-
-set(SRC
+add_library(extern_sky STATIC
   source/sky_model.cpp
   source/sky_nishita.cpp
 
@@ -32,9 +24,4 @@ set(SRC
   source/sky_float3.h
   source/sky_model_data.h
 )
-
-include_directories(
-  ${INC} ${INC_SYS}
-)
-
-add_library(extern_sky "${SRC}" "${INC}" "${INC_SYS}")
+target_include_directories(extern_sky PUBLIC ${CMAKE_CURRENT_LIST_DIR}/include)
